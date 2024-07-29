@@ -7,9 +7,10 @@ namespace SeverBooks.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
+            // Implementamos los modelos de la DB
+            
         }
 
-        
+
     }
 }
