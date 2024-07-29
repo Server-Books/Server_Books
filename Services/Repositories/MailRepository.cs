@@ -1,5 +1,5 @@
-using SeverBooks.Data;
-using SeverBooks.Models;
+using Server_Books.Data;
+using Server_Books.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,8 +29,8 @@ namespace SeverBooks.Services
             emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
             emailMessage.To.Add(new MailboxAddress("", Email));
             emailMessage.Subject = subject;
-            emailMessage.Body = new TextPart("plain") { Text =$"Hola, {user.Names},\nESta es tu contraseña {user.Password}." };
-
+/*             emailMessage.Body = new TextPart("plain") { Text =$"Hola, {user.Names},\nESta es tu contraseña {user.Password}." };
+ */
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
                 client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, false);

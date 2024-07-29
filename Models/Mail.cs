@@ -1,6 +1,6 @@
 
 
-namespace SeverBooks.Models
+namespace Server_Books.Models
 {
     public class Email
     {
