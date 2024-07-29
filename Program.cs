@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SeverBooks.Data;
+using SeverBooks.Models;
+using SeverBooks.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,9 @@ builder.Services.AddCors(options =>
     })
 );                           
 
+builder.Services.Configure<Email>(builder.Configuration.GetSection("EmailSettings"));
 
+builder.Services.AddTransient<MailRepository>();
 
 var app = builder.Build();
 
