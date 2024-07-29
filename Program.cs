@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Server_Books.Data;
 using Server_Books.Services.Interfaces;
 using Server_Books.Services.Repositories;
+using ServerBooks.Services.Interfaces;
+using ServerBooks.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddScoped<IExcelRepository, ExcelRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 
 // Conexión
 builder.Services.AddDbContext<DataContext>(options =>
