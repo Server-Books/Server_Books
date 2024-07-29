@@ -1,4 +1,4 @@
-namespace ServerBooks.Models{
+namespace Server_Books.Models{
     public class GendersBook{
         public int Id { get; set;}
         public int BookId { get; set;}

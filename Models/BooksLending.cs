@@ -1,4 +1,4 @@
-namespace ServerBooks.Models{
+namespace Server_Books.Models{
     public class BooksLending{
         public int Id { get; set;}
         public DateOnly StartDate { get; set;}

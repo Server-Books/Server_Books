@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using ServerBooks.Models;
+using Server_Books.Models;
 
 
-namespace SeverBooks.Data
+namespace Sever_Books.Data
 {
     public class DataContext : DbContext
     {
