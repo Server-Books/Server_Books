@@ -2,13 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using Server_Books.Data;
 using Server_Books.Services.Interfaces;
 using Server_Books.Services.Repositories;
+using Server_Books.Models;
 using ServerBooks.Services.Interfaces;
 using ServerBooks.Services.Repositories;
+using Server_Books.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IExcelRepository, ExcelRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
