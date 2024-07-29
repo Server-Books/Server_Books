@@ -1,4 +1,4 @@
-namespace ServerBooks.Models{
+namespace Server_Books.Models{
     public class Rol{
         public int Id { get; set;}
         public string Name_rol {get; set;}
