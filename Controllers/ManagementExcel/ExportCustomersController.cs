@@ -17,5 +17,14 @@ namespace Server_Books.Controllers.ManagementExcel
         {
             _excel = excel;
         }
+
+        // Metodo para exportar los customers
+        [HttpGet]
+        [Route("api/customers/export")]
+        public async Task<IActionResult> ExportCustomersAsync()
+        {
+            var stream = await _excel.ExportCustomersAsync();
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Customers.xlsx");
+        }
     }
 }
