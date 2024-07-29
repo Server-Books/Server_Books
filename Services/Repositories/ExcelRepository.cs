@@ -19,13 +19,14 @@ namespace Server_Books.Services.Repositories
             _context = context;
         }
 
+        #region  Metodo para exportar todos los libros de la DB
         public async Task<MemoryStream> ExportAllBooksAsync()
         {
             var books = await _context.Books.ToListAsync();
 
             using (var package = new ExcelPackage())
             {
-                var worksheet = package.Workbook.Worksheets.Add("Users");
+                var worksheet = package.Workbook.Worksheets.Add("Books");
                 worksheet.Cells[1, 1].Value = "Id";
                 worksheet.Cells[1, 2].Value = "Title";
                 worksheet.Cells[1, 3].Value = "Author";
@@ -54,7 +55,49 @@ namespace Server_Books.Services.Repositories
                 return stream;
             }
         }
+        #endregion
 
+        #region Metodo para exportar todos los libros segun el user
+        public async Task<MemoryStream> ExportBooksByIdAsync(int userId)
+        {
+            var loans = await _context.BookLending
+                                    .Include(bl => bl.Book)
+                                    .Where(bl => bl.UserId == userId)
+                                    .ToListAsync();
+
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("LoanHistory");
+                worksheet.Cells[1, 1].Value = "Id";
+                worksheet.Cells[1, 2].Value = "StartDate";
+                worksheet.Cells[1, 3].Value = "EndDate";
+                worksheet.Cells[1, 4].Value = "Status";
+                worksheet.Cells[1, 5].Value = "BookId";
+                worksheet.Cells[1, 6].Value = "BookTitle";
+                // worksheet.Cells[1, 5].Value = "CreatedAt";
+                // worksheet.Cells[1, 6].Value = "UpdatedAt";
+
+                for (int i = 0; i < loans.Count; i++)
+                {
+                    var loan = loans[i];
+                    worksheet.Cells[i + 2, 1].Value = loan.Id;
+                    worksheet.Cells[i + 2, 2].Value = loan.StartDate.ToString("yyyy-MM-dd");
+                    worksheet.Cells[i + 2, 3].Value = loan.EndDate?.ToString("yyyy-MM-dd");
+                    worksheet.Cells[i + 2, 4].Value = loan.Status;
+                    worksheet.Cells[i + 2, 5].Value = loan.BookId;
+                    worksheet.Cells[i + 2, 6].Value = loan.Book.Title;
+                }
+
+                var stream = new MemoryStream();
+                await package.SaveAsAsync(stream);
+                stream.Position = 0;
+                return stream;
+            }
+        }
+            #endregion
+
+        #region Metodo para exportar todos los customer
         public async Task<MemoryStream> ExportCustomersAsync()
         {
             var books = await _context.Users.ToListAsync();
@@ -88,5 +131,6 @@ namespace Server_Books.Services.Repositories
                 return stream;
             }
         }
+        #endregion
+        }
     }
-}
