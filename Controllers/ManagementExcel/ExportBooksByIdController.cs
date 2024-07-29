@@ -8,7 +8,7 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.ManagementExcel
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/export")]
     public class ExportBooksByIdController : ControllerBase
     {
         // Inyeccion de la interfaz
@@ -16,6 +16,14 @@ namespace Server_Books.Controllers.ManagementExcel
         public ExportBooksByIdController(IExcelRepository excelRepository)
         {
             _excelRepository = excelRepository;
+        }
+
+        [HttpGet]
+        [Route("loans/user/{userId}")]
+        public async Task<IActionResult> ExportUserLoanHistoryAsync(int userId)
+        {
+            var stream = await _excelRepository.ExportBooksByIdAsync(userId);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"LoanHistory_User_{userId}.xlsx");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Server_Books.Services.Interfaces
     public interface IExcelRepository
     {
         Task<MemoryStream> ExportCustomersAsync();
-        // Task<MemoryStream> ExportBooksByIdAsync();
-        // Task<MemoryStream> ExportAllBooksAsync();
+        Task<MemoryStream> ExportBooksByIdAsync(int userId);
+        Task<MemoryStream> ExportAllBooksAsync();
     }
 }
