@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Server_Books.Services.Interfaces
 {
-    public interface IExcel
+    public interface IExcelRepository
     {
         Task<MemoryStream> ExportCustomersAsync();
-        Task<MemoryStream> ExportBooksByIdAsync();
-        Task<MemoryStream> ExportAllBooksAsync();
+        // Task<MemoryStream> ExportBooksByIdAsync();
+        // Task<MemoryStream> ExportAllBooksAsync();
     }
 }

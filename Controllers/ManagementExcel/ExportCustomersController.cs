@@ -8,22 +8,22 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.ManagementExcel
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/customers")]
     public class ExportCustomersController : ControllerBase
     {
         // Inyeccion de la interfaz
-        private readonly IExcel _excel;
-        public ExportCustomersController(IExcel excel)
+        private readonly IExcelRepository _excelRepository;
+        public ExportCustomersController(IExcelRepository excelRepository)
         {
-            _excel = excel;
+            _excelRepository = excelRepository;
         }
 
         // Metodo para exportar los customers
         [HttpGet]
-        [Route("api/customers/export")]
+        [Route("/export")]
         public async Task<IActionResult> ExportCustomersAsync()
         {
-            var stream = await _excel.ExportCustomersAsync();
+            var stream = await _excelRepository.ExportCustomersAsync();
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Customers.xlsx");
         }
     }

@@ -1,9 +1,9 @@
 namespace Server_Books.Models{
-    public class Rol{
-        public int Id { get; set;}
-        public string Name_rol {get; set;}
+    public class Role
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
 
-        public List<User> Users { get; set;}
-
+        public ICollection<User> Users { get; set; }
     }
 }

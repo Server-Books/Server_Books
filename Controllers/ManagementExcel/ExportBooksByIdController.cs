@@ -12,10 +12,10 @@ namespace Server_Books.Controllers.ManagementExcel
     public class ExportBooksByIdController : ControllerBase
     {
         // Inyeccion de la interfaz
-        private readonly IExcel _excel;
-        public ExportBooksByIdController(IExcel excel)
+        private readonly IExcelRepository _excelRepository;
+        public ExportBooksByIdController(IExcelRepository excelRepository)
         {
-            _excel = excel;
+            _excelRepository = excelRepository;
         }
     }
 }
