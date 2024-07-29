@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Server_Books.Models{
     public class Book{
@@ -14,8 +15,6 @@ namespace Server_Books.Models{
         public int CopiesAvailable {get; set;}
         
         public string Status {get; set;}
-
-        public ICollection<GenderBook> GenderBooks { get; set; }
-        public ICollection<BookLending> BookLendings { get; set; }
+        
     }
 }
