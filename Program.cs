@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using ServerBooks.Services.Interfaces;
+using ServerBooks.Services.Repositories;
 using SeverBooks.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 
 //Conexión
 builder.Services.AddDbContext<DataContext> (options => 
