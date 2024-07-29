@@ -27,7 +27,7 @@ namespace ServerBooks.Services.Repositories
 
         public IEnumerable<Book> GetAll()
         {
-            throw new NotImplementedException();
+        return  _context.Books.Where(x => x.Status == "Available").ToList();
         }
 
         public Book GetById(int Id)
@@ -37,7 +37,11 @@ namespace ServerBooks.Services.Repositories
 
         public void UpdateBook(int Id, Book book)
         {
-            throw new NotImplementedException();
+            book.Id = Id;
+            
+            _context.Books.Update(book);
+            _context.SaveChanges();
+            
         }
     }
 }
