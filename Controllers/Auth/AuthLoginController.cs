@@ -1,6 +1,7 @@
 using Server_Books.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Server_Books.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Server_Books.Data;
 
@@ -38,9 +39,6 @@ namespace Server_Books.Controllers.Auth
                 return BadRequest("Error al ingresar"+e);
             }
         }
-
-    //data notation request
-        
-    }
+     }
     }
 }
