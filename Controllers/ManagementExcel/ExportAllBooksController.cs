@@ -8,7 +8,7 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.ManagementExcel
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/export")]
     public class ExportAllBooksController : ControllerBase
     {
         // Inyeccion de la interfaz
@@ -16,6 +16,15 @@ namespace Server_Books.Controllers.ManagementExcel
         public ExportAllBooksController(IExcelRepository excelRepository)
         {
             _excelRepository = excelRepository;
+        }
+
+        // Metodo para exportar los books
+        [HttpGet]
+        [Route("/books")]
+        public async Task<IActionResult> ExportAllBooksAsync()
+        {
+            var stream = await _excelRepository.ExportAllBooksAsync();
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Books.xlsx");
         }
     }
 }
