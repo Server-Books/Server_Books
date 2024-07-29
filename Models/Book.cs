@@ -1,6 +1,7 @@
+
 using System.ComponentModel.DataAnnotations;
 
-namespace ServerBooks.Models{
+namespace Server_Books.Models{
     public class Book{
         public int Id { get; set;}
         [Required(ErrorMessage = "Title es requerido")]
@@ -14,6 +15,7 @@ namespace ServerBooks.Models{
         
         public string Status {get; set;}
 
-        
+        public ICollection<GenderBook> GenderBooks { get; set; }
+        public ICollection<BookLending> BookLendings { get; set; }
     }
 }
