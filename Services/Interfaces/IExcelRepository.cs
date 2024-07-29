@@ -9,6 +9,6 @@ namespace Server_Books.Services.Interfaces
     {
         Task<MemoryStream> ExportCustomersAsync();
         // Task<MemoryStream> ExportBooksByIdAsync();
-        // Task<MemoryStream> ExportAllBooksAsync();
+        Task<MemoryStream> ExportAllBooksAsync();
     }
 }
