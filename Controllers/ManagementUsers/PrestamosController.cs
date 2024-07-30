@@ -57,8 +57,8 @@ namespace Server_Books.Controllers.ManagementUsers
             // Crear una solicitud de préstamo
             var prestamo = new BookLending
             {
-                StartDate = DateOnly.FromDateTime(DateTime.Now),
-                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
+                DateOfLoan = DateOnly.FromDateTime(DateTime.Now),
+                DateOfReturn = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
                 Status = "Pending", 
                 BookId = bookId,
                 UserId = 1 
