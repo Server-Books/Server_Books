@@ -78,3 +78,4 @@ INSERT INTO GenderBooks (GenderId, BookId) VALUES
 (1, 3); -- '1984' es de 'Fiction'
 
 
+SELECT * FROM Users;

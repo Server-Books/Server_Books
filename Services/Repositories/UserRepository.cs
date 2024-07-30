@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Server_Books.Data;
 using Server_Books.Models;
-using EntityFrameworkCoreJwtTokenAuth.Models.Auth;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Threading.Tasks;
 
 namespace Server_Books.Services
 {
@@ -18,15 +16,20 @@ namespace Server_Books.Services
             _mailRepository = mailRepository;
         }
 
-        public async Task Create(Models.User user, string password)
+        public async Task Create(User user, string password)
         {
-            var email = user.Email;
-            var emailer = await _context.Users.AnyAsync(u => u.Email == email);
-            if (string.IsNullOrWhiteSpace(email) || emailer.Equals(email))
-                throw new ArgumentException("Email es requerido o ya esta utilizado");
+            if (string.IsNullOrWhiteSpace(user.Email))
+                throw new ArgumentException("Email es requerido");
+
+            var emailExists = await _context.Users.AnyAsync(u => u.Email == user.Email);
+            if (emailExists)
+                throw new ArgumentException("Email ya está en uso");
 
             if (string.IsNullOrWhiteSpace(password) || !IsValidPassword(password))
-                throw new ArgumentException("Contraseña Insegura");
+                throw new ArgumentException("Contraseña insegura");
+
+            // Asignar la contraseña directamente
+            user.Password = password;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

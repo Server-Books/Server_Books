@@ -1,3 +1,4 @@
+
 using Server_Books.Models;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -31,16 +32,24 @@ namespace Server_Books.Services
                        $"{_emailSettings.SenderName}"
             };
 
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, false);
-                client.Authenticate(_emailSettings.Username, _emailSettings.Password);
-                client.Send(emailMessage);
-                client.Disconnect(true);
-            }
+         using (var client = new MailKit.Net.Smtp.SmtpClient())
+    {
+        try
+        {
+            client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, false);
+            client.Authenticate(_emailSettings.Username, _emailSettings.Password);
+            client.Send(emailMessage);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it as needed
+            throw new InvalidOperationException("Error sending email", ex);
+        }
+        finally
+        {
+            client.Disconnect(true);
         }
     }
 }
-
-
-
+    }
+}
