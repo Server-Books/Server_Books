@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(item =>
     });
 var _jwtsettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(_jwtsettings);
-
+builder.Services.Configure<Email>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMailRepository, MailRepository>();
