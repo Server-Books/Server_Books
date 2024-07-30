@@ -43,15 +43,15 @@ namespace Server_Books.Controllers.ManagementUsers
             }
 
             // Crear una solicitud de préstamo
-            var prestamo = new BookLending
+            var prestamo = new BooksLending
             {
-                StartDate = DateOnly.FromDateTime(DateTime.Now).ToDateTime(TimeOnly.MinValue),
-                EndDate = DateOnly.FromDateTime(DateTime.Now.AddDays(15)).ToDateTime(TimeOnly.MinValue),
-                Status = "Pendiente", // Estado inicial del préstamo
+                StartDate = DateOnly.FromDateTime(DateTime.Now),
+                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
+                Status = "Pendiente", 
                 BookId = bookId,
-                UserId = 1 // Aquí deberías establecer el UserId del usuario autenticado
+                UserId = 1 
             };
-            
+
             // Reducir el número de copias disponibles
             libro.CopiesAvailable--;
             if (libro.CopiesAvailable == 0)
