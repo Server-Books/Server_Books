@@ -43,7 +43,7 @@ namespace Server_Books.Controllers.ManagementUsers
             }
 
             // Crear una solicitud de préstamo
-            var prestamo = new BooksLending
+            var prestamo = new BookLending
             {
                 StartDate = DateOnly.FromDateTime(DateTime.Now),
                 EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
