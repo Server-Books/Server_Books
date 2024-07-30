@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Server_Books.Models;
-using ServerBooks.Services.Interfaces;
+using Server_Books.Services.Interfaces;
 
 namespace Server_Books.Controllers.Books
 {   
@@ -17,7 +17,7 @@ namespace Server_Books.Controllers.Books
         }
 
         [HttpGet]
-        [Route("api/Books")]
+        [Route("api/Books/Availible")]
         public IActionResult BookAvailable(){
             try{
                 var books =_booksRepository.GetAll();
@@ -27,6 +27,24 @@ namespace Server_Books.Controllers.Books
                 return StatusCode(500, new {message = ex.Message});
             }
         }
+
+
+
+        [HttpGet]
+        [Route("api/Books/{Id}")]
+        public IActionResult GetBook(int Id){
+            try{
+                var book = _booksRepository.GetById(Id);
+                if(book == null){
+                    return NotFound(new {message = "Libro no encontrado"});
+                }
+                return Ok(book);
+            }
+            catch( Exception ex){
+                return StatusCode(500, new {message = ex.Message});
+            }
+        }
+
 
     }
 }

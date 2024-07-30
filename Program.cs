@@ -3,8 +3,7 @@ using Server_Books.Data;
 using Server_Books.Services.Interfaces;
 using Server_Books.Services.Repositories;
 using Server_Books.Models;
-using ServerBooks.Services.Interfaces;
-using ServerBooks.Services.Repositories;
+
 using Server_Books.Services;
 
 var builder = WebApplication.CreateBuilder(args);
