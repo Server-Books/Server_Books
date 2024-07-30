@@ -19,9 +19,7 @@ CREATE TABLE Books (
     Author VARCHAR(255) NOT NULL,
     PublicationDate DATE NOT NULL,
     Status ENUM('Loaned', 'Available', 'NotAvailable') NOT NULL,
-    CopiesAvailable INT NOT NULL,
-    UserId INT,
-    FOREIGN KEY (UserId) REFERENCES Users(Id)
+    CopiesAvailable INT NOT NULL
 );
 
 CREATE TABLE BookLending (
@@ -59,10 +57,10 @@ INSERT INTO Users (Names, Password, Email, IdRole) VALUES
 ('Bob Smith', 'admin456', 'bob.smith@example.com', 2); -- Admin
 
 -- Insertar Libros
-INSERT INTO Books (Title, Author, PublicationDate, Status, CopiesAvailable, UserId) VALUES 
-('The Great Gatsby', 'F. Scott Fitzgerald', '1925-04-10', 'Available', 3, NULL),
-('To Kill a Mockingbird', 'Harper Lee', '1960-07-11', 'Available', 2, NULL),
-('1984', 'George Orwell', '1949-06-08', 'Loaned', 1, 1); -- Loaned to Alice
+INSERT INTO Books (Title, Author, PublicationDate, Status, CopiesAvailable) VALUES 
+('The Great Gatsby', 'F. Scott Fitzgerald', '1925-04-10', 'Available', 3),
+('To Kill a Mockingbird', 'Harper Lee', '1960-07-11', 'Available', 2),
+('1984', 'George Orwell', '1949-06-08', 'Loaned', 1); -- Loaned to Alice
 
 -- Insertar Préstamos de Libros
 INSERT INTO BookLending (DateOfLoan, DateOfReturn, Status, UserId, BookId) VALUES 
