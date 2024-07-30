@@ -73,8 +73,8 @@ namespace Server_Books.Services.Repositories
         // Enviar correo electrónico de inicio de sesión
         try
         {
-            _mailRepository.SendEmailLogin(user.Email, "Login Successful", "You have successfully logged in.", user);
-            Console.WriteLine("Email sent successfully.");
+           _mailRepository.SendEmailLogin(user.Email, "Login Successful", "You have successfully logged in.", user);
+           Console.WriteLine("Email sent successfully."); 
         }
         catch (Exception ex)
         {

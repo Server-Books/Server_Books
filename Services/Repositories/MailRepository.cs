@@ -16,7 +16,9 @@ namespace Server_Books.Services
         public void SendEmailCreateUser(string email, string subject, string body, User user)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
+            emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderEmail, _emailSettings.SenderEmail));
+            Console.WriteLine(_emailSettings.SenderName);
+            Console.WriteLine(_emailSettings.SenderEmail);
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart("plain") 
@@ -38,6 +40,7 @@ namespace Server_Books.Services
                     client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, false);
                     client.Authenticate(_emailSettings.Username, _emailSettings.Password);
                     client.Send(emailMessage);
+                    Console.WriteLine("Email sent");
                 }
                 catch (Exception ex)
                 {
@@ -85,7 +88,7 @@ namespace Server_Books.Services
     }
 }
 
-public void SendEmailLoanRequest(string email, string subject, string body, BookLending prestamo)
+ public void SendEmailLoanRequest(string email, string subject, string body, BookLending prestamo)
 {
     var emailMessage = new MimeMessage();
     emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));

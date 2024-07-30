@@ -12,3 +12,5 @@ namespace Server_Books.Services
         void SendEmailLoanRequestAdmin(string email, string subject, string body, User user);
     }
 }
+
+

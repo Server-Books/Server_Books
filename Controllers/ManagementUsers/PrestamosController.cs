@@ -81,11 +81,11 @@ public async Task<ActionResult> SolicitarPrestamo([FromBody] int bookId)
     _bookLendingRepository.Loaned(prestamo);
 
     // Enviar correo electrónico de solicitud de préstamo
-    var user = await _UserRepository.GetByIdAsync(userId); // Asegúrate de tener un método GetByIdAsync en tu UserRepository
+    /* var user = await _UserRepository.GetByIdAsync(userId); // Asegúrate de tener un método GetByIdAsync en tu UserRepository
     if (user != null)
     {
         _mailRepository.SendEmailLoanRequest(user.Email, "Solicitud de Préstamo Recibida", "Tu solicitud de préstamo ha sido recibida.", prestamo);
-    }
+    } */
 
     // Retornar la respuesta
     return Ok(new
