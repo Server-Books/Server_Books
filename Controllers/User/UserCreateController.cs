@@ -4,7 +4,6 @@ using Server_Books.Services;
 namespace Server_Books.Controllers
 {
     [ApiController]
-    [Route("api/Users/Create")]
     public class UserCreateController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
