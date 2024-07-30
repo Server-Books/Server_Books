@@ -95,8 +95,8 @@ namespace Server_Books.Services
                $"Tu solicitud de préstamo ha sido recibida.\n\n" +
                $"Detalles del préstamo:\n" +
                $"Libro ID: {prestamo.BookId}\n" +
-               $"Fecha de inicio: {prestamo.StartDate}\n" +
-               $"Fecha de fin: {prestamo.EndDate}\n" +
+               $"Fecha de inicio: {prestamo.DateOfLoan}\n" +
+               $"Fecha de fin: {prestamo.DateOfReturn}\n" +
                $"Estado: {prestamo.Status}\n\n" +
                $"Saludos,\n" +
                $"{_emailSettings.SenderName}"
