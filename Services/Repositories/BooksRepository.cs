@@ -75,5 +75,11 @@ namespace Server_Books.Services.Repositories
                 throw new KeyNotFoundException("El libro no fue encontrado.");
             }
         }
+
+        public IEnumerable<Book> GetWaiting()
+        {
+        return  _context.Books.Where(x => x.Status == "Available").ToList();
+        }
+
     }
 }

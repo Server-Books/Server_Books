@@ -1,32 +1,44 @@
 using Microsoft.AspNetCore.Mvc;
 using Server_Books.Services;
 using Server_Books.Models;
+using ServerBooks.Services.Interfaces;
 
 namespace Server_Books.Controllers.ManagementUsers
 {
-    
+    [ApiController]
+    [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IBookLendingRepository _bookLendingRepository;
 
-        public BooksController(IBookRepository bookRepository)
+        public BooksController(IBookRepository bookRepository, IBookLendingRepository bookLendingRepository)
         {
             _bookRepository = bookRepository;
+            _bookLendingRepository = bookLendingRepository;
         }
 
-        //Logica para traer todos los libros
-        // GET: api/Books
-        [Route("api/[controller]/VerLibros")]
-        [HttpGet]
+        // Lógica para traer todos los libros
+        // GET: api/Books/VerLibros
+        [HttpGet("VerLibros")]
         public ActionResult<IEnumerable<Book>> GetAllBooks()
         {
             var books = _bookRepository.GetAll();
             return Ok(books);
         }
 
-        //Logica para realziar un prestamo de un libro
-        [Route("api/[controller]/Prestamo")]
-        [HttpPost]
+        [HttpGet("VerPrestamos")]
+        public ActionResult<IEnumerable<BookLending>> lookAvailible()
+        {
+            var lends = _bookLendingRepository.GetBookLendings();
+            return Ok(lends);
+        }
+
+
+
+        // Lógica para realizar un préstamo de un libro
+        // POST: api/Books/Prestamo
+        [HttpPost("Prestamo")]
         public ActionResult SolicitarPrestamo([FromBody] int bookId)
         {
             // Obtener el libro solicitado
@@ -47,24 +59,13 @@ namespace Server_Books.Controllers.ManagementUsers
             {
                 StartDate = DateOnly.FromDateTime(DateTime.Now),
                 EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
-                Status = "Pendiente", 
+                Status = "Pending", 
                 BookId = bookId,
                 UserId = 1 
             };
 
-            // Reducir el número de copias disponibles
-            libro.CopiesAvailable--;
-            if (libro.CopiesAvailable == 0)
-            
-            {
-                libro.Status = "No Disponible";
-            }
-
-            // Guardar los cambios en el libro
-            _bookRepository.Update(libro);
-
             // Agregar la solicitud de préstamo a la base de datos
-            //_booksLendingRepository.Add(prestamo);
+            _bookLendingRepository.Loaned(prestamo);
 
             // Retornar la respuesta
             return Ok(new

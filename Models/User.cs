@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Server_Books.Models
 {
     public class User
@@ -9,6 +11,7 @@ namespace Server_Books.Models
         public int RoleId { get; set; }
 
         public Role? Role { get; set; }
+        [JsonIgnore]
         public ICollection<BookLending>? BookLendings { get; set; }
     }
 }
