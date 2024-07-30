@@ -1,4 +1,5 @@
 namespace Server_Books.Models{
+
     public class GenderBook
     {
         public int Id { get; set; }
@@ -7,5 +8,6 @@ namespace Server_Books.Models{
 
         public Gender Gender { get; set; }
         public Book Book { get; set; }
+
     }
 }
