@@ -1,11 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Server_Books.Models;
-using Server_Books.Data;
-using Server_Books.Services.Repositories;
-using Server_Books.Services.Interfaces;
-
-using System.Threading.Tasks;
-using EntityFrameworkCoreJwtTokenAuth.Models.Auth;
 using Server_Books.Services;
 
 namespace Server_Books.Controllers
