@@ -8,11 +8,11 @@ using System.Text;
 using Server_Books.Models;
 using Server_Books.Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IExcelRepository, ExcelRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
