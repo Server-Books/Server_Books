@@ -9,6 +9,7 @@ using Server_Books.Models;
 using Server_Books.Services;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,7 +20,7 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddScoped<IBooksRepository, BooksRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 // Conexión
 builder.Services.AddDbContext<DataContext>(options =>
@@ -55,9 +56,10 @@ builder.Services.AddAuthentication(item =>
     });
 var _jwtsettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(_jwtsettings);
-
+builder.Services.Configure<Email>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMailRepository, MailRepository>();
 
 
 var app = builder.Build();

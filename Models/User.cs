@@ -1,4 +1,5 @@
-namespace Server_Books.Models{
+namespace Server_Books.Models
+{
     public class User
     {
         public int Id { get; set; }
@@ -7,7 +8,8 @@ namespace Server_Books.Models{
         public string Password { get; set; }
         public int RoleId { get; set; }
 
-        public Role Role { get; set; }
-        public ICollection<BooksLending> BookLendings { get; set; }
+        public Role? Role { get; set; }
+        public ICollection<BookLending>? BookLendings { get; set; }
     }
 }
+

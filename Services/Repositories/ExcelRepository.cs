@@ -60,7 +60,7 @@ namespace Server_Books.Services.Repositories
         #region Metodo para exportar todos los libros segun el user
         public async Task<MemoryStream> ExportBooksByIdAsync(int userId)
         {
-            var loans = await _context.BookLending
+            var loans = await _context.BooksLending
                                     .Include(bl => bl.Book)
                                     .Where(bl => bl.UserId == userId)
                                     .ToListAsync();
