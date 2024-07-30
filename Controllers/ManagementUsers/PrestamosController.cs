@@ -45,7 +45,7 @@ namespace Server_Books.Controllers.ManagementUsers
         //Logica para realziar un prestamo de un libro
         [Route("api/[controller]/Prestamo")]
         [HttpPost]
-        public ActionResult SolicitarPrestamo([FromBody] int bookId)
+        public ActionResult SolicitarPrestamo( int bookId, int UserId)
         {
             // Obtener el libro solicitado
             var libro = _bookRepository.GetById(bookId);
@@ -67,7 +67,7 @@ namespace Server_Books.Controllers.ManagementUsers
                 DateOfReturn = DateOnly.FromDateTime(DateTime.Now).AddDays(7),
                 Status = "Pendiente", 
                 BookId = bookId,
-                UserId = 1 // Aquí deberías establecer el UserId del usuario autenticado
+                UserId = UserId
             };
 
             _bookRepository.Update(libro);

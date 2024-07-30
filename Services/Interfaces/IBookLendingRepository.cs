@@ -6,7 +6,7 @@ namespace Server_Books.Services
     public interface IBookLendingRepository
     {
         BookLending GetById(int id);
-        IEnumerable<BookLending> GetByBookId(int bookId);
+        IEnumerable<BookLending> GetByLendingId(int lendingId);
         void Add(BookLending bookLending);
         void Update(BookLending bookLending);
         void Delete(int id);

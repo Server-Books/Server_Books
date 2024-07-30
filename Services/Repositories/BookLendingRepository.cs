@@ -20,9 +20,9 @@ namespace Server_Books.Services
             return _context.BooksLending.Find(id);
         }
 
-        public IEnumerable<BookLending> GetByBookId(int bookId)
+        public IEnumerable<BookLending> GetByLendingId(int lendingId)
         {
-            return _context.BooksLending.Where(l => l.BookId == bookId).ToList();
+            return _context.BooksLending.Where(l => l.Id == lendingId).ToList();
         }
 
         public void Add(BookLending bookLending)
