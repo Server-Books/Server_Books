@@ -14,5 +14,6 @@ namespace Server_Books.Services.Interfaces
         public void UpdateBook(int Id, Book book);
         public void DeleteBook(int Id);
         public void ActivateBooK(int Id);
+        IEnumerable<Book> GetWaiting();
     }
 }
