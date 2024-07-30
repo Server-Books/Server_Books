@@ -4,7 +4,7 @@ using Server_Books.Models;
 
 namespace Server_Books.Controllers.ManagementUsers
 {
-
+    
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
@@ -45,17 +45,17 @@ namespace Server_Books.Controllers.ManagementUsers
             // Crear una solicitud de préstamo
             var prestamo = new BookLending
             {
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(15),
-                Status = "Pendiente",
+                StartDate = DateOnly.FromDateTime(DateTime.Now),
+                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
+                Status = "Pendiente", 
                 BookId = bookId,
-                UserId = 1
+                UserId = 1 
             };
 
             // Reducir el número de copias disponibles
             libro.CopiesAvailable--;
             if (libro.CopiesAvailable == 0)
-
+            
             {
                 libro.Status = "No Disponible";
             }
