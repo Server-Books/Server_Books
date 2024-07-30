@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Server_Books.Models;
 
-namespace ServerBooks.Services.Interfaces
+namespace Server_Books.Services.Interfaces
 {
     public interface IBooksRepository
     {
@@ -12,5 +12,7 @@ namespace ServerBooks.Services.Interfaces
         Book GetById (int Id);
         IEnumerable<Book> GetAll ();
         public void UpdateBook(int Id, Book book);
+        public void DeleteBook(int Id);
+        public void ActivateBooK(int Id);
     }
 }
