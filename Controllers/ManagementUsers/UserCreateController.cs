@@ -11,7 +11,7 @@ using Server_Books.Services;
 namespace Server_Books.Controllers
 {
     [ApiController]
-    [Route("api/Users/Create")]
+    [Route("api/Users/")]
     public class UserCreateController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -23,7 +23,7 @@ namespace Server_Books.Controllers
         }
 
         [HttpPost]
-        [Route("api/Users/Create")]
+        [Route("Create")]
 
         public async Task<ActionResult<Models.User>> CreateUser(Models.User user)
         {

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Server_Books.Models;
 using Server_Books.Data;
+using Server_Books.Services.Interfaces;
 
 namespace Server_Books.Services
 {
@@ -13,7 +14,7 @@ namespace Server_Books.Services
             _context = context;
         }
 
-        public void Add(Book book)
+        public void Create(Book book)
         {
             _context.Books.Add(book);
             _context.SaveChanges();
@@ -39,10 +40,18 @@ namespace Server_Books.Services
             }
         }
 
-        public void Update(Book book)
+        public void Update(int id, Book book)
         {
-            _context.Books.Update(book);
-            _context.SaveChanges();
+            var existingBook = _context.Books.Find(id);
+            if (existingBook != null)
+            {
+                existingBook.Title = book.Title;
+                existingBook.Author = book.Author;
+                existingBook.CopiesAvailable = book.CopiesAvailable;
+
+                _context.Books.Update(existingBook);
+                _context.SaveChanges();
+            }
         }
     }
 }

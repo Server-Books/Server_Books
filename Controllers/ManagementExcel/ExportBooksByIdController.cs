@@ -8,7 +8,7 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.ManagementExcel
 {
     [ApiController]
-    [Route("api/export")]
+    [Route("api/loans/user/")]
     public class ExportBooksByIdController : ControllerBase
     {
         // Inyeccion de la interfaz
@@ -19,7 +19,7 @@ namespace Server_Books.Controllers.ManagementExcel
         }
 
         [HttpGet]
-        [Route("loans/user/{userId}")]
+        [Route("{userId}")]
         public async Task<IActionResult> ExportUserLoanHistoryAsync(int userId)
         {
             var stream = await _excelRepository.ExportBooksByIdAsync(userId);

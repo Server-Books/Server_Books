@@ -9,17 +9,21 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.Books
 {   
     [ApiController]
+    [Route("api/Books/")]
     public class BooksController : ControllerBase
     {
         public readonly IBooksRepository _booksRepository;
-        public BooksController(IBooksRepository booksRepository){
+        public BooksController(IBooksRepository booksRepository)
+        {
             _booksRepository = booksRepository;
         }
 
         [HttpGet]
-        [Route("api/Books")]
-        public IActionResult BookAvailable(){
-            try{
+        [Route("Available")]
+        public IActionResult BookAvailable()
+        {
+            try
+            {
                 var books =_booksRepository.GetAll();
                 return Ok(books);
             }

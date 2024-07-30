@@ -60,7 +60,7 @@ namespace Server_Books.Services.Repositories
         #region Metodo para exportar todos los libros segun el user
         public async Task<MemoryStream> ExportBooksByIdAsync(int userId)
         {
-            var loans = await _context.BookLending
+            var loans = await _context.BooksLending
                                     .Include(bl => bl.Book)
                                     .Where(bl => bl.UserId == userId)
                                     .ToListAsync();
@@ -70,8 +70,8 @@ namespace Server_Books.Services.Repositories
             {
                 var worksheet = package.Workbook.Worksheets.Add("LoanHistory");
                 worksheet.Cells[1, 1].Value = "Id";
-                worksheet.Cells[1, 2].Value = "StartDate";
-                worksheet.Cells[1, 3].Value = "EndDate";
+                worksheet.Cells[1, 2].Value = "DateOfLoan";
+                worksheet.Cells[1, 3].Value = "DateOfReturn";
                 worksheet.Cells[1, 4].Value = "Status";
                 worksheet.Cells[1, 5].Value = "BookId";
                 worksheet.Cells[1, 6].Value = "BookTitle";
@@ -82,8 +82,8 @@ namespace Server_Books.Services.Repositories
                 {
                     var loan = loans[i];
                     worksheet.Cells[i + 2, 1].Value = loan.Id;
-                    worksheet.Cells[i + 2, 2].Value = loan.StartDate.ToString("yyyy-MM-dd");
-                    worksheet.Cells[i + 2, 3].Value = loan.EndDate?.ToString("yyyy-MM-dd");
+                    worksheet.Cells[i + 2, 2].Value = loan.DateOfLoan.ToString("yyyy-MM-dd");
+                    worksheet.Cells[i + 2, 3].Value = loan.DateOfReturn?.ToString("yyyy-MM-dd");
                     worksheet.Cells[i + 2, 4].Value = loan.Status;
                     worksheet.Cells[i + 2, 5].Value = loan.BookId;
                     worksheet.Cells[i + 2, 6].Value = loan.Book.Title;
