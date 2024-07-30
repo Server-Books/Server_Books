@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server_Books.Models;
 
-namespace Drive.Controllers.Auth
+namespace Server_Books.Controllers.Auth
 {
     public class AuthLogOutController : ControllerBase
     {
