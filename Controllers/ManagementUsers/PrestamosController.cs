@@ -24,6 +24,24 @@ namespace Server_Books.Controllers.ManagementUsers
             return Ok(books);
         }
 
+        // Consultar la disponibilidad de un libro por ID
+        [HttpGet("Disponibilidad/{bookId}")]
+        public ActionResult GetBookAvailability(int bookId)
+        {
+            var book = _bookRepository.GetById(bookId);
+            if (book == null)
+            {
+                return NotFound("El libro no existe.");
+            }
+
+            return Ok(new
+            {
+                book.Title,
+                book.CopiesAvailable,
+                Status = book.CopiesAvailable > 0 ? "Disponible" : "No Disponible"
+            });
+        }
+
         //Logica para realziar un prestamo de un libro
         [Route("api/[controller]/Prestamo")]
         [HttpPost]
@@ -45,33 +63,22 @@ namespace Server_Books.Controllers.ManagementUsers
             // Crear una solicitud de préstamo
             var prestamo = new BookLending
             {
-                StartDate = DateOnly.FromDateTime(DateTime.Now),
-                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
-                Status = "Pendiente", // Estado inicial del préstamo
+                DateOfLoan = DateOnly.FromDateTime(DateTime.Now),
+                DateOfReturn = DateOnly.FromDateTime(DateTime.Now).AddDays(7),
+                Status = "Pendiente", 
                 BookId = bookId,
                 UserId = 1 // Aquí deberías establecer el UserId del usuario autenticado
             };
 
-            // Reducir el número de copias disponibles
-            libro.CopiesAvailable--;
-            if (libro.CopiesAvailable == 0)
-            
-            {
-                libro.Status = "No Disponible";
-            }
-
-            // Guardar los cambios en el libro
             _bookRepository.Update(libro);
 
-            // Agregar la solicitud de préstamo a la base de datos
-            //_booksLendingRepository.Add(prestamo);
-
-            // Retornar la respuesta
             return Ok(new
             {
                 mensaje = "Solicitud de préstamo realizada con éxito. El libro está pendiente de aprobación.",
                 prestamo
             });
         }
+
+        
     }
 }
