@@ -59,6 +59,7 @@ builder.Services.Configure<JwtSettings>(_jwtsettings);
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMailRepository, MailRepository>();
 
 
 var app = builder.Build();
