@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Server_Books.Models;
 
-namespace ServerBooks.Services.Interfaces
+namespace Server_Books.Services.Interfaces
 {
     public interface IBooksRepository
     {

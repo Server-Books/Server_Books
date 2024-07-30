@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Server_Books.Data;
 using Server_Books.Models;
-using ServerBooks.Services.Interfaces;
+using Server_Books.Services.Interfaces;
 
 
-namespace ServerBooks.Services.Repositories
+namespace Server_Books.Services.Repositories
 {
     public class BooksRepository : IBooksRepository
     {
