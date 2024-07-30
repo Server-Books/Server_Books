@@ -8,7 +8,7 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.ManagementExcel
 {
     [ApiController]
-    [Route("api/export")]
+    [Route("api/export/")]
     public class ExportCustomersController : ControllerBase
     {
         // Inyeccion de la interfaz
@@ -20,7 +20,7 @@ namespace Server_Books.Controllers.ManagementExcel
 
         // Metodo para exportar los customers
         [HttpGet]
-        [Route("/customers")]
+        [Route("customers")]
         public async Task<IActionResult> ExportCustomersAsync()
         {
             var stream = await _excelRepository.ExportCustomersAsync();

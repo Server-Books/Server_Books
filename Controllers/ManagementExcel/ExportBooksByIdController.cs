@@ -8,7 +8,7 @@ using Server_Books.Services.Interfaces;
 namespace Server_Books.Controllers.ManagementExcel
 {
     [ApiController]
-    [Route("api/loans/user/")]
+    [Route("api/export/loans/")]
     public class ExportBooksByIdController : ControllerBase
     {
         // Inyeccion de la interfaz
