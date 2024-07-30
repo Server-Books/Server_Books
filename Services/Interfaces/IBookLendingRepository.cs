@@ -1,11 +1,18 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Server_Books.Models;
+using System.Collections.Generic;
 
 namespace Server_Books.Services
 {
     public interface IBookLendingRepository
     {
+        BookLending GetById(int id);
+        IEnumerable<BookLending> GetByLendingId(int lendingId);
+        void Add(BookLending bookLending);
+        void Update(BookLending bookLending);
+        void Delete(int id);
+    }
+}
+
         // // Obtener todos los préstamos de libros
         // IEnumerable<BookLending> GetAllBookLendings();
 
@@ -20,5 +27,4 @@ namespace Server_Books.Services
 
         // // Eliminar un préstamo de libro por ID
         // void Delete(int id);
-    }
-}
+

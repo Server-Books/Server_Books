@@ -11,8 +11,8 @@ namespace Server_Books.Controllers.Books
     [ApiController]
     public class BooksCreateController : ControllerBase
     {
-        public readonly IBooksRepository _booksRepository;
-        public BooksCreateController(IBooksRepository booksRepository){
+        public readonly IBookRepository _booksRepository;
+        public BooksCreateController(IBookRepository booksRepository){
             _booksRepository = booksRepository;
         }
 

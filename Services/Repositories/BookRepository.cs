@@ -14,7 +14,7 @@ namespace Server_Books.Services
             _context = context;
         }
 
-        public void Create(Book book)
+        public void CreateBook(Book book)
         {
             _context.Books.Add(book);
             _context.SaveChanges();
@@ -40,18 +40,11 @@ namespace Server_Books.Services
             }
         }
 
-        public void Update(int id, Book book)
-        {
-            var existingBook = _context.Books.Find(id);
-            if (existingBook != null)
-            {
-                existingBook.Title = book.Title;
-                existingBook.Author = book.Author;
-                existingBook.CopiesAvailable = book.CopiesAvailable;
 
-                _context.Books.Update(existingBook);
-                _context.SaveChanges();
-            }
+        public void UpdateBook(Book book)
+        {
+            _context.Books.Update(book);
+            _context.SaveChanges();
         }
     }
 }

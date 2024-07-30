@@ -9,7 +9,7 @@ namespace Server_Books.Services.Interfaces
     public interface IBookRepository
     {
         // Crear un nuevo libro
-        void Create(Book book);
+        void CreateBook(Book book);
 
         // Obtener un libro por su ID
         Book GetById(int id);
@@ -18,7 +18,7 @@ namespace Server_Books.Services.Interfaces
         IEnumerable<Book> GetAll();
 
         // Actualizar un libro existente
-        void Update(int id, Book book);
+        void UpdateBook(Book book);
 
         // Eliminar un libro por su ID
         void Delete(int id);

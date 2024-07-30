@@ -11,8 +11,8 @@ namespace Server_Books.Controllers.Books
     [ApiController]
     public class BooksUpdateController : ControllerBase
     {
-        public readonly IBooksRepository _booksRepository;
-        public BooksUpdateController(IBooksRepository booksRepository){
+        public readonly IBookRepository _booksRepository;
+        public BooksUpdateController(IBookRepository booksRepository){
             _booksRepository = booksRepository;
         }
 
@@ -22,7 +22,7 @@ namespace Server_Books.Controllers.Books
         {   
             try
             {
-                _booksRepository.UpdateBook(Id, book);
+                _booksRepository.UpdateBook(book);
                 return Ok(new{ message = "Se ha actualizado con exito"});
             }
             catch (Exception ex)

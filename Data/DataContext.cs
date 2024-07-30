@@ -14,7 +14,7 @@ namespace Server_Books.Data
         public DbSet<User> Users { get; set;}
         public DbSet<Role> Roles {get; set;}
         public DbSet<Book> Books { get; set;}
-        public DbSet<BookLending> BooksLending { get; set;}
+        public DbSet<BookLending> BooksLending { get; set; }
         public DbSet<GenderBook> GendersBooks {get; set;}
         public DbSet<Gender> Genders {get; set;}
     }
