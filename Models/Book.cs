@@ -15,6 +15,11 @@ namespace Server_Books.Models{
         public int CopiesAvailable {get; set;}
         
         public string Status {get; set;}
+
+        public ICollection<GenderBook>? BookLending { get; set; }
+
         
     }
 }
+
+

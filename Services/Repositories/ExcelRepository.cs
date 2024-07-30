@@ -82,7 +82,7 @@ namespace Server_Books.Services.Repositories
                 {
                     var loan = loans[i];
                     worksheet.Cells[i + 2, 1].Value = loan.Id;
-                    worksheet.Cells[i + 2, 2].Value = loan.StartDate.ToString("yyyy-MM-dd");
+                    worksheet.Cells[i + 2, 2].Value = loan.StartDate?.ToString("yyyy-MM-dd");
                     worksheet.Cells[i + 2, 3].Value = loan.EndDate?.ToString("yyyy-MM-dd");
                     worksheet.Cells[i + 2, 4].Value = loan.Status;
                     worksheet.Cells[i + 2, 5].Value = loan.BookId;

@@ -6,11 +6,11 @@ CREATE TABLE Roles (
 
 CREATE TABLE Users (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    Names VARCHAR(255) NOT NULL,
+    Name VARCHAR(255) NOT NULL,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(255) UNIQUE NOT NULL,
-    IdRole INT,
-    FOREIGN KEY (IdRole) REFERENCES Roles(Id)
+    RoleId INT,
+    FOREIGN KEY (RoleId) REFERENCES Roles(Id)
 );
 
 CREATE TABLE Books (
@@ -22,16 +22,18 @@ CREATE TABLE Books (
     CopiesAvailable INT NOT NULL
 );
 
-CREATE TABLE BookLending (
+CREATE TABLE BooksLending (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    DateOfLoan DATE NOT NULL,
-    DateOfReturn DATE NOT NULL,
-    Status ENUM('Approved', 'Denied') NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    Status ENUM('Approved', 'Denied','Pending') NOT NULL,
     UserId INT,
     BookId INT,
     FOREIGN KEY (UserId) REFERENCES Users(Id),
     FOREIGN KEY (BookId) REFERENCES Books(Id)
 );
+
+
 
 CREATE TABLE Gender (
     Id INT PRIMARY KEY AUTO_INCREMENT,
@@ -52,7 +54,7 @@ INSERT INTO Roles (Role) VALUES
 ('Admin');
 
 -- Insertar Usuarios
-INSERT INTO Users (Names, Password, Email, IdRole) VALUES 
+INSERT INTO Users (Name, Password, Email, RoleId) VALUES 
 ('Alice Johnson', 'password123', 'alice.johnson@example.com', 1), -- Client
 ('Bob Smith', 'admin456', 'bob.smith@example.com', 2); -- Admin
 
@@ -63,7 +65,7 @@ INSERT INTO Books (Title, Author, PublicationDate, Status, CopiesAvailable) VALU
 ('1984', 'George Orwell', '1949-06-08', 'Loaned', 1); -- Loaned to Alice
 
 -- Insertar Préstamos de Libros
-INSERT INTO BooksLending (DateOfLoan, DateOfReturn, Status, UserId, BookId) VALUES 
+INSERT INTO BooksLending (StartDate, EndDate, Status, UserId, BookId) VALUES 
 ('2024-07-01', '2024-07-15', 'Approved', 1, 3); -- Alice ha prestado '1984'
 
 -- Insertar Géneros
@@ -78,4 +80,5 @@ INSERT INTO GenderBooks (GenderId, BookId) VALUES
 (1, 3); -- '1984' es de 'Fiction'
 
 
-SELECT * FROM Users;
+SELECT * FROM BooksLending;
+

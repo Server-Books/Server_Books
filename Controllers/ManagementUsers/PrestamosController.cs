@@ -1,77 +1,90 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server_Books.Services;
 using Server_Books.Models;
 
 namespace Server_Books.Controllers.ManagementUsers
 {
-    
-    public class BooksController : ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PrestamosController : ControllerBase
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IBookLoanRepository _bookLoanRepository;
 
-        public BooksController(IBookRepository bookRepository)
+        public PrestamosController(IBookLoanRepository loanRepository)
         {
-            _bookRepository = bookRepository;
+            _bookLoanRepository = loanRepository;
         }
 
-        //Logica para traer todos los libros
-        // GET: api/Books
-        [Route("api/[controller]/VerLibros")]
-        [HttpGet]
-        public ActionResult<IEnumerable<Book>> GetAllBooks()
-        {
-            var books = _bookRepository.GetAll();
-            return Ok(books);
-        }
-
-        //Logica para realziar un prestamo de un libro
-        [Route("api/[controller]/Prestamo")]
+        // Logica para realizar un prestamo de un libro
+        [Route("SolicitarPrestamo")]
         [HttpPost]
-        public ActionResult SolicitarPrestamo([FromBody] int bookId)
+        public ActionResult SolicitarPrestamo([FromBody] BookLending solicitud)
         {
-            // Obtener el libro solicitado
-            var libro = _bookRepository.GetById(bookId);
-            if (libro == null)
+            try
             {
-                return NotFound("El libro no existe.");
+                // Llamar al método del repositorio para solicitar el préstamo
+var prestamo = _bookLoanRepository.SolicitarPrestamo(solicitud.UserId, solicitud.BookId);
+                // Retornar la respuesta
+                return Ok(new
+                {
+                    mensaje = "Solicitud de préstamo realizada con éxito. El libro está pendiente de aprobación.",
+                    prestamo
+                });
             }
-
-            // Verificar si hay copias disponibles
-            if (libro.CopiesAvailable <= 0)
+            catch (DbUpdateException dbEx)
             {
-                return BadRequest("No hay copias disponibles para el libro solicitado.");
+                // Capturar la excepción interna
+                return BadRequest(new
+                {
+                    mensaje = "Error al guardar los cambios en la base de datos.",
+                    detalle = dbEx.InnerException?.Message
+                });
             }
-
-            // Crear una solicitud de préstamo
-            var prestamo = new BookLending
+            catch (Exception ex)
             {
-                StartDate = DateOnly.FromDateTime(DateTime.Now),
-                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
-                Status = "Pendiente", 
-                BookId = bookId,
-                UserId = 1 
-            };
-
-            // Reducir el número de copias disponibles
-            libro.CopiesAvailable--;
-            if (libro.CopiesAvailable == 0)
-            
-            {
-                libro.Status = "No Disponible";
+                return BadRequest(ex.Message);
             }
+        }
 
-            // Guardar los cambios en el libro
-            _bookRepository.Update(libro);
-
-            // Agregar la solicitud de préstamo a la base de datos
-            //_booksLendingRepository.Add(prestamo);
-
-            // Retornar la respuesta
-            return Ok(new
+        // Logica para buscar un libro por ID
+        [Route("BuscarLibroPorId")]
+        [HttpGet]
+        public ActionResult<Book> BuscarLibroPorId([FromQuery] int bookId)
+        {
+            try
             {
-                mensaje = "Solicitud de préstamo realizada con éxito. El libro está pendiente de aprobación.",
-                prestamo
-            });
+                var libro = _bookLoanRepository.BuscarLibroPorId(bookId);
+                if (libro == null)
+                {
+                    return NotFound("Libro no encontrado.");
+                }
+                return Ok(libro);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // Logica para buscar un libro por nombre
+        [Route("BuscarLibroPorNombre")]
+        [HttpGet]
+        public ActionResult<Book> BuscarLibroPorNombre([FromQuery] string nombre)
+        {
+            try
+            {
+                var libro = _bookLoanRepository.BuscarLibroPorNombre(nombre);
+                if (libro == null)
+                {
+                    return NotFound("Libro no encontrado.");
+                }
+                return Ok(libro);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
