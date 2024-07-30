@@ -10,8 +10,6 @@ using Server_Books.Services;
 
 namespace Server_Books.Controllers
 {
-    [ApiController]
-    [Route("api/Users/Create")]
     public class UserCreateController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -33,7 +31,7 @@ namespace Server_Books.Controllers
             }
             try
             {
-                await _userRepository.Create(user,user.Password);
+                await _userRepository.Create(user,user.Password,user.Email);
                 // await _mailerSendRepository.SendMailAsync(user.Email, user.Username, user.Id, user.Password);
                 return Ok("Te has registrado correctamente!");
             }

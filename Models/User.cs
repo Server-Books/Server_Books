@@ -8,6 +8,6 @@ namespace Server_Books.Models{
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
-        public ICollection<BooksLending> BookLendings { get; set; }
+        // public ICollection<BooksLending> BookLendings { get; set; }
     }
 }

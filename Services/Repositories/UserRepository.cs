@@ -16,11 +16,11 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task Create(Models.User user,string password)
+    public async Task Create(Models.User user,string password,string email)
     {
         // var emailer =  await _context.Users.AnyAsync(u => u.Email == email);
-        // if (string.IsNullOrWhiteSpace(email)||emailer.Equals(email))
-        //     throw new ArgumentException("Email es requerido o ya esta utilizado");
+        if (string.IsNullOrWhiteSpace(email) || await _context.Users.AnyAsync(u => u.Email == email))
+             throw new ArgumentException("Email es requerido o ya esta utilizado");
 
          if (string.IsNullOrWhiteSpace(password) || !IsValidPassword(password))
          throw new ArgumentException("Contraseña Insegura");

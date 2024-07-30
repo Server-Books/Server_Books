@@ -7,20 +7,19 @@ using Server_Books.Data;
 
 namespace Server_Books.Controllers.Auth
 {
-    public class AuthLoginController
-    {
-          public class AuthLoginControllers : ControllerBase
+    
+    public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _authRepository;
-        public AuthLoginControllers(IAuthRepository authRepository)
+
+        public AuthController(IAuthRepository authRepository)
         {
             _authRepository = authRepository;
         }
 
-
         [HttpPost]
-        [Route("api/login")]
-        public IActionResult LoginUser ([FromBody] UserCred usercred)
+        [Route("api/auth/login")]
+        public IActionResult LoginUser([FromBody] UserCred usercred)
         {
             try 
             {
@@ -39,6 +38,5 @@ namespace Server_Books.Controllers.Auth
                 return BadRequest("Error al ingresar"+e);
             }
         }
-     }
     }
 }
