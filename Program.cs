@@ -20,7 +20,7 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddScoped<IBooksRepository, BooksRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 // Conexión
 builder.Services.AddDbContext<DataContext>(options =>

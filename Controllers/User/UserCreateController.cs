@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 
 namespace Server_Books.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+
     public class UserCreateController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -16,7 +15,7 @@ namespace Server_Books.Controllers
         }
 
         [HttpPost]
-        [Route("Create")]
+        [Route("api/user/Create")]
         public async Task<ActionResult<string>> CreateUser([FromBody] Models.User user)
         {
             if (user == null)
@@ -25,7 +24,9 @@ namespace Server_Books.Controllers
             }
             try
             {
-                await _userRepository.Create(user, user.Password);
+
+                await _userRepository.Create(user,user.Password);
+                // await _mailerSendRepository.SendMailAsync(user.Email, user.Username, user.Id, user.Password);
                 return Ok("Te has registrado correctamente!");
             }
             catch (ArgumentException ex)

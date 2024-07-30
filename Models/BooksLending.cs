@@ -11,5 +11,5 @@ namespace Server_Books.Models{
         public Book Book { get; set; }
         public User User { get; set; }
 
-}
+    }
 }
