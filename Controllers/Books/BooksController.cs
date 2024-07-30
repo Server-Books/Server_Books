@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Server_Books.Models;
 using Server_Books.Services.Interfaces;
+using System.Security.Claims;
 
 namespace Server_Books.Controllers.Books
 {   
@@ -46,5 +47,19 @@ namespace Server_Books.Controllers.Books
         }
 
 
+private int GetAuthenticatedUserId()
+{
+    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+    if (userIdClaim == null)
+    {
+        throw new InvalidOperationException("No se pudo encontrar el ID del usuario autenticado.");
+    }
+
+    return int.Parse(userIdClaim.Value);
+}
+
+
     }
 }
+
+

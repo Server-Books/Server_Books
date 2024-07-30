@@ -56,30 +56,37 @@ namespace Server_Books.Services.Repositories
             throw new NotImplementedException();
         }
 
-        public User Login(string email, string Password)
+        public User Login(string email, string password)
+{
+    Console.WriteLine("AQUI---------------!!!!!");
+    Console.WriteLine(email);
+
+    if (string.IsNullOrEmpty(email))
+    {
+        return null; 
+    }
+
+    var user = _context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+
+    if (user != null && user.Password.ToLower() == password.ToLower())
+    {
+        // Enviar correo electrónico de inicio de sesión
+        try
         {
-            Console.WriteLine("AQUI---------------!!!!!");
-            Console.WriteLine(email);
-
-            if (string.IsNullOrEmpty(email))
-            {
-                return null; // 
-            }
-
-            var user = _context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
-
-            if (user != null && user.Password.ToLower() == Password.ToLower())
-            {
-                // Enviar correo electrónico de inicio de sesión
-                _mailRepository.SendEmailLogin(user.Email, "Login Successful", "You have successfully logged in.", user);
-                return user;
-            }
-            else
-            {
-                return null;
-            }
+            _mailRepository.SendEmailLogin(user.Email, "Login Successful", "You have successfully logged in.", user);
+            Console.WriteLine("Email sent successfully.");
         }
-
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending email: {ex.Message}");
+        }
+        return user;
+    }
+    else
+    {
+        return null;
+    }
+}
         public void LogOutAsync()
         {
             throw new NotImplementedException();
@@ -88,3 +95,4 @@ namespace Server_Books.Services.Repositories
         // 9Y9+JKvPyNR0qmUGeCT1oHfCwK2E4EK9YiUCRLXL9D8="
     }
 }
+

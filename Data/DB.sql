@@ -1,4 +1,4 @@
--- Active: 1722288378885@@bptfnq9kqbcvadwuhthr-mysql.services.clever-cloud.com@3306
+-- Active: 1722288378885@@bptfnq9kqbcvadwuhthr-mysql.services.clever-cloud.com@3306@bptfnq9kqbcvadwuhthr
 CREATE TABLE Roles (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     Role VARCHAR(255) NOT NULL
