@@ -12,5 +12,7 @@ namespace Server_Books.Services.Interfaces
         string GenerateToken(User User);
         void LogOutAsync();
         IEnumerable<User> GetAllBooks();
+
+        
     }
 }
