@@ -49,7 +49,7 @@ namespace Server_Books.Services.Repositories
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<User> GetAllBooks()
         {
             throw new NotImplementedException();
         }

@@ -8,17 +8,20 @@ using System.Text;
 using Server_Books.Models;
 using Server_Books.Services;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// AddLendings services to the container.
 builder.Services.AddScoped<IExcelRepository, ExcelRepository>();
-builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookLendingRepository, BookLendingRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 // Conexión
 builder.Services.AddDbContext<DataContext>(options =>
@@ -54,9 +57,10 @@ builder.Services.AddAuthentication(item =>
     });
 var _jwtsettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(_jwtsettings);
-
+builder.Services.Configure<Email>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMailRepository, MailRepository>();
 
 
 var app = builder.Build();

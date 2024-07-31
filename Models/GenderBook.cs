@@ -1,4 +1,5 @@
 namespace Server_Books.Models{
+
     public class GenderBook
     {
         public int Id { get; set; }

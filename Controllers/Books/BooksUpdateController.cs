@@ -18,11 +18,11 @@ namespace Server_Books.Controllers.Books
 
         [HttpPut]
         [Route("api/Books/{Id}")]
-        public IActionResult ActualizarAdmin(int Id,  Book book)
+        public IActionResult ActualizaLibro(int Id,  Book book)
         {   
             try
             {
-                _booksRepository.UpdateBook(book);
+                _booksRepository.UpdateBook(Id, book);
                 return Ok(new{ message = "Se ha actualizado con exito"});
             }
             catch (Exception ex)

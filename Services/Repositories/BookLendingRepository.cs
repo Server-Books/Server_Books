@@ -15,23 +15,18 @@ namespace Server_Books.Services
             _context = context;
         }
 
-        public BookLending GetById(int id)
+        public BookLending GetLendingById(int lendingId)
         {
-            return _context.BooksLending.Find(id);
+            return _context.BooksLending.FirstOrDefault(l => l.Id == lendingId);
         }
 
-        public IEnumerable<BookLending> GetByLendingId(int lendingId)
-        {
-            return _context.BooksLending.Where(l => l.Id == lendingId).ToList();
-        }
-
-        public void Add(BookLending bookLending)
+        public void AddLendings(BookLending bookLending)
         {
             _context.BooksLending.Add(bookLending);
             _context.SaveChanges();
         }
 
-        public void Update(BookLending bookLending)
+        public void UpdateLendings(BookLending bookLending)
         {
             _context.BooksLending.Update(bookLending);
             _context.SaveChanges();
@@ -45,6 +40,16 @@ namespace Server_Books.Services
                 _context.BooksLending.Remove(lending);
                 _context.SaveChanges();
             }
+        }
+
+        public void Loaned(BookLending bookLending)
+        {
+            _context.BooksLending.Add(bookLending);
+            _context.SaveChanges();
+        }
+        public IEnumerable<BookLending> GetBookLendings()
+        {
+            return _context.BooksLending.ToList();
         }
     }
 }

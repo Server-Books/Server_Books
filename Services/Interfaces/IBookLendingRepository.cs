@@ -5,26 +5,27 @@ namespace Server_Books.Services
 {
     public interface IBookLendingRepository
     {
-        BookLending GetById(int id);
-        IEnumerable<BookLending> GetByLendingId(int lendingId);
-        void Add(BookLending bookLending);
-        void Update(BookLending bookLending);
+        BookLending GetLendingById(int lendingId);
+        IEnumerable<BookLending> GetBookLendings();
+        void AddLendings(BookLending bookLending);
+        void UpdateLendings(BookLending bookLending);
         void Delete(int id);
+        public void Loaned(BookLending bookLending);
     }
 }
 
-        // // Obtener todos los préstamos de libros
-        // IEnumerable<BookLending> GetAllBookLendings();
+// // Obtener todos los préstamos de libros
+// IEnumerable<BookLending> GetAllBookLendings();
 
-        // // Obtener un préstamo de libro por ID
-        // BookLending GetBookLendingById(int id);
+// // Obtener un préstamo de libro por ID
+// BookLending GetBookLendingById(int id);
 
-        // // Agregar un nuevo préstamo de libro
-        // void Add(BookLending bookLending);
+// // Agregar un nuevo préstamo de libro
+// void AddLendings(BookLending bookLending);
 
-        // // Actualizar un préstamo de libro existente
-        // void Update(BookLending bookLending);
+// // Actualizar un préstamo de libro existente
+// void UpdateLendings(BookLending bookLending);
 
-        // // Eliminar un préstamo de libro por ID
-        // void Delete(int id);
+// // Eliminar un préstamo de libro por ID
+// void Delete(int id);
 

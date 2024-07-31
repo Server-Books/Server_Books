@@ -63,7 +63,7 @@ INSERT INTO Books (Title, Author, PublicationDate, Status, CopiesAvailable) VALU
 ('1984', 'George Orwell', '1949-06-08', 'Loaned', 1); -- Loaned to Alice
 
 -- Insertar Préstamos de Libros
-INSERT INTO BookLending (DateOfLoan, DateOfReturn, Status, UserId, BookId) VALUES 
+INSERT INTO BooksLending (DateOfLoan, DateOfReturn, Status, UserId, BookId) VALUES 
 ('2024-07-01', '2024-07-15', 'Approved', 1, 3); -- Alice ha prestado '1984'
 
 -- Insertar Géneros
@@ -80,3 +80,4 @@ INSERT INTO GenderBooks (GenderId, BookId) VALUES
 
 SHOW TABLES LIKE 'BookLending';
 
+SELECT * FROM Users;

@@ -1,44 +1,55 @@
-using Server_Books.Data;
+
 using Server_Books.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Threading.Tasks;
-using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using MailKit.Net.Smtp;
 
-
-namespace SeverBooks.Services
+namespace Server_Books.Services
 {
-    public class MailRepository 
+    public class MailRepository : IMailRepository
     {
-           private readonly Email _emailSettings;
+        private readonly Email _emailSettings;
 
-          public MailRepository(IOptions<Email> emailSettings)
+        public MailRepository(IOptions<Email> emailSettings)
         {
             _emailSettings = emailSettings.Value;
         }
 
-         public void SendEmail(string Email, string subject, string body, Book user)
+        public void SendEmailCreateUser(string email, string subject, string body, User user)
         {
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
-            emailMessage.To.Add(new MailboxAddress("", Email));
+            emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
-/*             emailMessage.Body = new TextPart("plain") { Text =$"Hola, {user.Names},\nESta es tu contraseña {user.Password}." };
- */
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, false);
-                client.Authenticate(_emailSettings.Username, _emailSettings.Password);
-                client.Send(emailMessage);
-                client.Disconnect(true);
-            
-            }
+            emailMessage.Body = new TextPart("plain") 
+            { 
+                Text = $"Hola, {user.Name},\n\n" +
+                       $"Tu cuenta ha sido creada exitosamente.\n\n" +
+                       $"Detalles de la cuenta:\n" +
+                       $"Nombre: {user.Name}\n" +
+                       $"Correo electrónico: {user.Email}\n" +
+                       $"Contraseña: {user.Password}\n\n" +
+                       $"Saludos,\n" +
+                       $"{_emailSettings.SenderName}"
+            };
+
+         using (var client = new MailKit.Net.Smtp.SmtpClient())
+    {
+        try
+        {
+            client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, false);
+            client.Authenticate(_emailSettings.Username, _emailSettings.Password);
+            client.Send(emailMessage);
         }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it as needed
+            throw new InvalidOperationException("Error sending email", ex);
+        }
+        finally
+        {
+            client.Disconnect(true);
+        }
+    }
+}
     }
 }

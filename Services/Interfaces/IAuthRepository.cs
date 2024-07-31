@@ -11,6 +11,6 @@ namespace Server_Books.Services.Interfaces
         User Login(string UserName, string Password);
         string GenerateToken(User User);
         void LogOutAsync();
-        IEnumerable<User> GetAll();
+        IEnumerable<User> GetAllBooks();
     }
 }

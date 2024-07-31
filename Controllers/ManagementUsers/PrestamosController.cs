@@ -5,25 +5,33 @@ using Server_Books.Services.Interfaces;
 
 namespace Server_Books.Controllers.ManagementUsers
 {
-    
-    public class BooksController : ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PrestamosController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
         private readonly IBookLendingRepository _bookLendingRepository;
 
-        public BooksController(IBookRepository bookRepository, IBookLendingRepository bookLendingRepository)
+        public PrestamosController(IBookRepository bookRepository, IBookLendingRepository bookLendingRepository)
         {
             _bookRepository = bookRepository;
             _bookLendingRepository = bookLendingRepository;
         }
 
-        //Logica para traer todos los libros
-        // GET: api/Books
-        [Route("api/[controller]/VerLibros")]
-        [HttpGet]
+        // Lógica para traer todos los libros
+        // GET: api/Books/VerLibros
+        [HttpGet("TodosLosLibros")]
         public ActionResult<IEnumerable<Book>> GetAllBooks()
         {
-            var books = _bookRepository.GetAll();
+            var books = _bookRepository.GetAllBooks();
+            return Ok(books);
+        }
+
+        // Tarer los libros dosponibles
+        [HttpGet("LibrosDisponibles")]
+        public ActionResult<IEnumerable<Book>> GetAllBooksAvailable()
+        {
+            var books = _bookRepository.GetAllBooksAvailable();
             return Ok(books);
         }
 
@@ -31,7 +39,7 @@ namespace Server_Books.Controllers.ManagementUsers
         [HttpGet("Disponibilidad/{bookId}")]
         public ActionResult GetBookAvailability(int bookId)
         {
-            var book = _bookRepository.GetById(bookId);
+            var book = _bookRepository.GetBookById(bookId);
             if (book == null)
             {
                 return NotFound("El libro no existe.");
@@ -45,13 +53,22 @@ namespace Server_Books.Controllers.ManagementUsers
             });
         }
 
-        //Logica para realziar un prestamo de un libro
-        [Route("api/[controller]/Prestamo")]
-        [HttpPost]
+        [HttpGet("TodosLosPrestamos")]
+        public ActionResult<IEnumerable<BookLending>> GetBookLendings()
+        {
+            var lends = _bookLendingRepository.GetBookLendings();
+            return Ok(lends);
+        }
+
+
+
+        // Lógica para realizar un préstamo de un libro
+        // POST: api/Books/Prestamo
+        [HttpPost("Prestamo")]
         public ActionResult SolicitarPrestamo(int bookId, int userId)
         {
             // Obtener el libro solicitado
-            var libro = _bookRepository.GetById(bookId);
+            var libro = _bookRepository.GetBookById(bookId);
             if (libro == null)
             {
                 return NotFound("El libro no existe.");
@@ -67,11 +84,12 @@ namespace Server_Books.Controllers.ManagementUsers
             // libro.CopiesAvailable--;
 
             // Crear una solicitud de préstamo
+            
             var prestamo = new BookLending
             {
                 DateOfLoan = DateOnly.FromDateTime(DateTime.Now),
                 DateOfReturn = DateOnly.FromDateTime(DateTime.Now).AddDays(7),
-                Status = "Pendiente",
+                Status = "Pending",
                 BookId = bookId,
                 UserId = userId
             };
@@ -79,9 +97,10 @@ namespace Server_Books.Controllers.ManagementUsers
             // // Actualizar el libro en el repositorio
             // _bookRepository.UpdateBook(libro);
 
-            // Guardar el préstamo (deberías tener un método en tu repositorio para esto)
-            _bookRepository.UpdateBook(libro);
+            // Agregar la solicitud de préstamo a la base de datos
+            _bookLendingRepository.Loaned(prestamo);
 
+            // Retornar la respuesta
             return Ok(new
             {
                 mensaje = "Solicitud de préstamo realizada con éxito. El libro está pendiente de aprobación.",
