@@ -56,16 +56,7 @@ public async Task<ActionResult> SolicitarPrestamo([FromBody] int bookId)
         return BadRequest("No hay copias disponibles para el libro solicitado.");
     }
 
-    // Obtener el ID del usuario autenticado
-    int userId;
-    try
-    {
-        userId = GetAuthenticatedUserId();
-    }
-    catch (InvalidOperationException ex)
-    {
-        return Unauthorized(ex.Message);
-    }
+
 
     // Crear una solicitud de préstamo
     var prestamo = new BookLending
@@ -74,20 +65,13 @@ public async Task<ActionResult> SolicitarPrestamo([FromBody] int bookId)
         DateOfReturn = DateOnly.FromDateTime(DateTime.Now).AddDays(15),
         Status = "Pending", 
         BookId = bookId,
-        UserId = userId
+        UserId = 1
     };
 
     // Agregar la solicitud de préstamo a la base de datos
     _bookLendingRepository.Loaned(prestamo);
 
-    // Enviar correo electrónico de solicitud de préstamo
-    /* var user = await _UserRepository.GetByIdAsync(userId); // Asegúrate de tener un método GetByIdAsync en tu UserRepository
-    if (user != null)
-    {
-        _mailRepository.SendEmailLoanRequest(user.Email, "Solicitud de Préstamo Recibida", "Tu solicitud de préstamo ha sido recibida.", prestamo);
-    } */
-
-    // Retornar la respuesta
+  
     return Ok(new
     {
         mensaje = "Solicitud de préstamo realizada con éxito. El libro está pendiente de aprobación.",
@@ -95,9 +79,6 @@ public async Task<ActionResult> SolicitarPrestamo([FromBody] int bookId)
     });
 }
 
-        private int GetAuthenticatedUserId()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
+

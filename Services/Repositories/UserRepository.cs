@@ -48,10 +48,5 @@ namespace Server_Books.Services
 
             return true;
         }
-
-        public async Task<User> GetByIdAsync(int userId)
-{
-    return await _context.Users.FindAsync(userId);
-}
     }
 }
