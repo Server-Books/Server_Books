@@ -18,11 +18,13 @@ namespace Server_Books.Services.Repositories
     {
         private readonly DataContext _context;
         private readonly JwtSettings _jwtSettings;
+        private readonly IMailRepository _mailRepository;
 
-        public AuthRepository(DataContext context, IOptions<JwtSettings> options)
+        public AuthRepository(DataContext context, IOptions<JwtSettings> options, IMailRepository mailRepository)
         {
             _context = context;
             _jwtSettings = options.Value;
+            _mailRepository = mailRepository;
         }
 
         public string GenerateToken(User user)
@@ -49,34 +51,42 @@ namespace Server_Books.Services.Repositories
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public IEnumerable<User> GetAllBooks()
+        public IEnumerable<User> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public User Login(string email, string Password)
+        public User Login(string email, string password)
+{
+    Console.WriteLine("AQUI---------------!!!!!");
+    Console.WriteLine(email);
+
+    if (string.IsNullOrEmpty(email))
+    {
+        return null; 
+    }
+
+    var user = _context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+
+    if (user != null && user.Password.ToLower() == password.ToLower())
+    {
+        // Enviar correo electrónico de inicio de sesión
+        try
         {
-            Console.WriteLine("AQUI---------------!!!!!");
-            Console.WriteLine(email);
-
-            if (string.IsNullOrEmpty(email))
-            {
-                return null; // 
-            }
-
-            //var user = _context.MarketingUsers.FirstOrDefault(u => u.Username == Username);
-            var user = _context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
-
-            if (user != null && user.Password.ToLower() == Password.ToLower())
-            {
-                return user;
-            }
-            else
-            {
-                return null;
-            }
+           _mailRepository.SendEmailLogin(user.Email, "Login Successful", "You have successfully logged in.", user);
+           Console.WriteLine("Email sent successfully."); 
         }
-
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending email: {ex.Message}");
+        }
+        return user;
+    }
+    else
+    {
+        return null;
+    }
+}
         public void LogOutAsync()
         {
             throw new NotImplementedException();
@@ -85,3 +95,4 @@ namespace Server_Books.Services.Repositories
         // 9Y9+JKvPyNR0qmUGeCT1oHfCwK2E4EK9YiUCRLXL9D8="
     }
 }
+
